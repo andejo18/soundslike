@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<HTML>
+<head>
+
+	<title> MASH </title>
+	<script language= "JavaScript" type ="text/javascript" src = "mashup.js"></script>
+
+</head>
+
+<BODY>
+
+	<div id="fb-root"></div>
+	<script>
+	  window.fbAsyncInit = function() {
+	    // init the FB JS SDK
+	    FB.init({
+	      appId      : '495351900525853', // App ID from the App Dashboard
+	      channelUrl : 'http://knuth.luther.edu/~orteth01/mashup/mashup.html', // Channel File for x-domain communication
+	      status     : true, // check the login status upon init?
+	      cookie     : true, // set sessions cookies to allow your server to access the session?
+	      xfbml      : true  // parse XFBML tags on this page?
+	    });
+
+	    // Additional initialization code such as adding Event Listeners goes here
+
+	  };
+
+	  // Load the SDK's source Asynchronously
+	  // Note that the debug version is being actively developed and might 
+	  // contain some type checks that are overly strict. 
+	  // Please report such bugs using the bugs tool.
+	  (function(d, debug){
+	     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement('script'); js.id = id; js.async = true;
+	     js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+	     ref.parentNode.insertBefore(js, ref);
+	   }(document, /*debug*/ false));
+
+	</script>
+
+
+
+
+	<p> hey joel look at this like button </p>
+	<iframe src="http://www.facebook.com/plugins/like.php?href=YOUR_URL" scrolling="no" frameborder="0" style="border:none; width:450px; height:80px"></iframe>
+
+	<p> hey joel look at this login button </p>
+	<div class="fb-login-button" data-show-faces="false" data-width="200"></div>
+
+
+	<p> hey joel look at this comment box </p>
+	<div class="fb-comments" data-href="http://knuth.luther.edu/~orteth01/mashup/mashup.html" data-width="600" data-num-posts="5" data-colorscheme="dark"></div>
+
+
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<HTML>
+<head>
+
+	<title> SoundsLike </title>
+	<script type = "text/javascript" src = "jquery.js"></script>
+	<script src="http://connect.soundcloud.com/sdk.js"></script>
+
+	<script type = "text/javascript" src = "soundcloudjq.js"></script>
+	<link rel="stylesheet" type="text/css" href="mashup.css">
+
+
+</head>
+
+<BODY>
+
+	<div id="fb-root"></div>
+	<script src="//connect.facebook.net/en_US/all.js"></script>
+	<script>
+		window.fbAsyncInit = function() {
+		    // init the FB JS SDK
+		    FB.init({
+		      appId      : '495351900525853', // App ID from the App Dashboard
+		      channelUrl : 'http://knuth.luther.edu/~orteth01/mashup/mashup.html', // Channel File for x-domain communication
+		      status     : true, // check the login status upon init?
+		      cookie     : true, // set sessions cookies to allow your server to access the session?
+		      xfbml      : true,  // parse XFBML tags on this page?
+		    });
+
+		    // Additional initialization code such as adding Event Listeners goes here
+
+
+
+		    FB.getLoginStatus(function(response) {
+				  if (response.status === 'connected') {
+				    // connected
+				    FB.api('/me', function(response) {
+						console.log("hello " + response.name);
+					});
+
+				  } else if (response.status === 'not_authorized') {
+				    // not_authorized
+				    alert("Welcome! Log in to Facebook using the button in the upper right-hand corner to use this App");
+				    login();
+				  } else {
+				    // not_logged_in
+				    alert("Welcome! Log in to Facebook using the button in the upper right-hand corner to use this App");
+				    login();
+				  }
+			 });
+
+
+
+
+
+
+
+		    function login() {
+		    	FB.login(function(response) {
+		        
+			        if (response.authResponse) {
+			            // connected
+			        } else {
+			            // cancelled
+			        }
+		    	
+		    	}, {scope: "user_likes"})
+			};
+
+		};
+
+
+		function getLikeList() {
+
+			FB.api('/me/likes', function(response) {
+
+
+		    	nameList = [];
+
+		    	var typeStr = $("#category").val()
+
+		    	for (i = 0; i < response.data.length; i++){
+
+		    		if( response.data[i].category === typeStr) {
+		    	 		nameList.push(response.data[i].name)
+		    	 	}
+
+		    	}
+
+		    	likesStr= '<ul>';
+
+		    	for (i = 0; i < nameList.length; i++){
+		    		likesStr = likesStr.concat("<li class = 'likeElement' id = '" + nameList[i].toString() + "'>" + nameList[i] + '</li>');	
+		    	}
+
+		    	likesStr = likesStr.concat("</ul>")
+
+
+		    	pageOutput = document.getElementById("likes");
+				pageOutput.innerHTML = likesStr;
+
+				generateUsers();
+
+			});
+		};
+
+
+
+		// Load the SDK's source Asynchronously
+		// Note that the debug version is being actively developed and might 
+		// contain some type checks that are overly strict. 
+		// Please report such bugs using the bugs tool.
+		(function(d, debug){
+		    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+		    if (d.getElementById(id)) {return;}
+		    js = d.createElement('script'); js.id = id; js.async = true;
+		    js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+		    ref.parentNode.insertBefore(js, ref);
+		}(document, /*debug*/ false));
+
+	</script>
+
+
+
+	<div id = "upperBar">
+
+		<h1 >SoundsLike</h1>
+
+
+	<div id="facebook">
+
+		<div size = "medium" class="fb-login-button" data-show-faces="true" data-width="200"></div>
+		<br>
+		<br>
+		<div class="fb-like" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+
+	</div>
+
+
+
+		<p id="explanation"> Welcome to SoundsLike! SoundsLike is web application that allows for exploration into new but not unfamiliar musical territory. Based on your Facebook likes, SoundsLike finds related artists on soundcloud and allows you to access their music.</p>
+		
+		
+
+	</div>
+
+	
+
+	<div id="likebox">
+		<button id = "generateLikesButton" onclick= "getLikeList()">1)Generate Your Likes</button>
+
+
+		<select id = "category">
+			<option>Musician/band</option>
+			<option>Movie</option>  
+			<option>Tv show</option>
+		</select>
+
+		<hr>
+
+		<p id="likes"> </p>
+	</div>
+
+
+	<div id="usersBox">
+		<h3 id = "artistText">2)Pick Related SC Artist </h3>
+
+		<hr>
+
+
+		<div id="users"></div>
+	</div>
+
+
+
+	<div id="songBox">
+
+		<h3 id = "songText">3)Enjoy Music From Soundcloud Based On Your Facebook Likes</h3>
+
+		<hr>
+
+		<div id = "songs"></div>
+	</div>
+
+
+</BODY>
+
+</HTML>
+
+
